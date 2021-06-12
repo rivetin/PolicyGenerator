@@ -1,0 +1,185 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Let's build the Json!! 🚀 </legend>
+            <div class="form-group">
+                {{ form.project_name.label(class="form-control-label") }}
+
+                {% if form.project_name.errors %}
+                {{ form.project_name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.project_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.project_name(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.logo.label(class="form-control-label") }}
+
+                {% if form.logo.errors %}
+                {{ form.logo(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.logo.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.logo(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.company_full_name.label(class="form-control-label") }}
+
+                {% if form.company_full_name.errors %}
+                {{ form.company_full_name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.company_full_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.company_full_name(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.company_short_name.label(class="form-control-label") }}
+
+                {% if form.company_short_name.errors %}
+                {{ form.company_short_name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.company_short_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.company_short_name(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.ciso_name.label(class="form-control-label") }}
+
+                {% if form.ciso_name.errors %}
+                {{ form.ciso_name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.ciso_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.ciso_name(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.hrman_name.label(class="form-control-label") }}
+
+                {% if form.hrman_name.errors %}
+                {{ form.hrman_name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.hrman_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.hrman_name(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.itsec_name.label(class="form-control-label") }}
+
+                {% if form.itsec_name.errors %}
+                {{ form.itsec_name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.itsec_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.itsec_name(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.ithelp_name.label(class="form-control-label") }}
+
+                {% if form.ithelp_name.errors %}
+                {{ form.ithelp_name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.ithelp_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.ithelp_name(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.doc_ref.label(class="form-control-label") }}
+
+                {% if form.doc_ref.errors %}
+                {{ form.doc_ref(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.doc_ref.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.doc_ref(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% for key, value in dict_item.items() %}
+            <div>
+                <div class="form-check">
+                    <input class="form-check-input" id={{ value }} name={{ value }} type="checkbox" value=1>
+                    <label class="form-check-label" for={{ value }}>{{ value }}</label>
+                </div>
+                <div class="selectt {{ value }}">
+                    <div class="form-group">
+                        <label class="form-control-label" for="author-of-{{ value }}">author-of-{{ value }}</label>
+
+
+                        <input class="form-control form-control-lg" id="author-of-{{ value }}"
+                            name="author-of-{{ value }}" type="text" value="">
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="classification-of-{{ value }}">classification-of-{{ value
+                            }}</label>
+
+
+                        <input class="form-control form-control-lg" id="classification-of-{{ value }}"
+                            name="classification-of-{{ value }}" type="text" value="">
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="Date-of-{{ value }}-creation">Date-of-{{ value
+                            }}-creation</label>
+
+
+                        <input class="form-control form-control-lg" id="Date-of-{{ value }}-creation"
+                            name="Date-of-{{ value }}-creation" type="text" value="">
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="Owner-of-{{ value }}">Owner-of-{{ value }}</label>
+
+
+                        <input class="form-control form-control-lg" id="Owner-of-{{ value }}"
+                            name="Owner-of-{{ value }}" type="text" value="">
+
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
