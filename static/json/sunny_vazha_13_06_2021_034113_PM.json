@@ -1,0 +1,21 @@
+{
+     "project_name": "sunny vazha",
+     "common_fields": {
+          "filename": "favicon_13_06_2021_034113_PM.png",
+          "company_full_name": "vazhaa",
+          "company_short_name": "zynact",
+          "ciso_name": "Athul Baby",
+          "hrman_name": "Athul Baby",
+          "itsec_name": "Athul Baby",
+          "ithelp_name": "Athul Baby",
+          "doc_ref": "qq"
+     },
+     "specific_fields": {
+          "3.docx": {
+               "data_author": "esd",
+               "data_classification": "ddd",
+               "data_date": "dd",
+               "data_owner": "qq"
+          }
+     }
+}

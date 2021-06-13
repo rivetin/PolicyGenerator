@@ -4,7 +4,7 @@ import time
 import pickle
 from dotenv import load_dotenv
 from datetime import datetime
-from flask import Flask, render_template, sessions, url_for, flash, redirect, request, session
+from flask import Flask, render_template, sessions, url_for, flash, redirect, request, session, send_from_directory
 from forms import BuildForm, RegistrationForm, LoginForm
 from werkzeug.utils import secure_filename
 dirname = os.path.dirname(__file__)
@@ -89,13 +89,6 @@ def build():
         else:
             g_user = 'Web Admin'
 
-        log = {
-            'author': g_user,
-            'title': project_name,
-            'content': company_full_name,
-            'date_posted': date_string('homelog')
-        }
-
         json_dict = {
             'project_name': project_name,
             'common_fields': {
@@ -139,6 +132,13 @@ def build():
         out_file = open(out_file_path, 'w')
         json.dump(json_dict, out_file, indent=5)
 
+        log = {
+            'author': g_user,
+            'title': project_name,
+            'content': company_full_name,
+            'date_posted': date_string('homelog'),
+            'json': out_file_name}
+
         logs.append(log)
         open_file = open(log_file_path, "wb")
         pickle.dump(logs, open_file)
@@ -149,9 +149,20 @@ def build():
     return render_template('build.html', title='Build', form=form, dict_item=dict_items)
 
 
-@app.route("/about")
-def about():
-    return render_template('about.html', title='About')
+@app.route('/download/<path:filename>', methods=['GET', 'POST'])
+def download(filename):
+    # Appending app path to upload folder path within app root folder
+    download_file = os.path.join(dirname, 'static\json')
+    print(download_file, filename)
+    # Returning file from appended path
+    return send_from_directory(directory=download_file, path=filename, as_attachment=True)
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash(f'Sad to see you go 😪', 'danger')
+    return redirect(url_for('login'))
 
 
 @app.route("/register", methods=['GET', 'POST'])
