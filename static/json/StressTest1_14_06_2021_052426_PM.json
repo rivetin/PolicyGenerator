@@ -1,0 +1,27 @@
+{
+     "project_name": "StressTest1",
+     "common_fields": {
+          "filename": "sky_14_06_2021_052426_PM.jpg",
+          "company_full_name": "t e e e e",
+          "company_short_name": "e e e e ee ",
+          "ciso_name": "e  w  w w wwww",
+          "hrman_name": "wddddd",
+          "itsec_name": "ddddddd",
+          "ithelp_name": "sdsdsd",
+          "doc_ref": "sdssdsdds"
+     },
+     "specific_fields": {
+          "temp3.docx": {
+               "data_author": "dddddd",
+               "data_classification": "ddddddd",
+               "data_date": "ssssssssss",
+               "data_owner": "lvknlnv"
+          },
+          "temp5.docx": {
+               "data_author": "sfjjdnvlknd",
+               "data_classification": "sfsfk",
+               "data_date": "spjffskf",
+               "data_owner": "pofjpsofj"
+          }
+     }
+}
