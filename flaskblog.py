@@ -1,12 +1,14 @@
 import os
 import json
-import time
 import pickle
+import json2zip
 from dotenv import load_dotenv
 from datetime import datetime
 from flask import Flask, render_template, sessions, url_for, flash, redirect, request, session, send_from_directory
 from forms import BuildForm, RegistrationForm, LoginForm
 from werkzeug.utils import secure_filename
+
+
 dirname = os.path.dirname(__file__)
 
 # used by log object to set logs listed in the home page
@@ -152,10 +154,11 @@ def build():
 @app.route('/download/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
     # Appending app path to upload folder path within app root folder
-    download_file = os.path.join(dirname, 'static\json')
-    print(download_file, filename)
+    json_file = os.path.join(dirname, 'static\json', filename)
     # Returning file from appended path
-    return send_from_directory(directory=download_file, path=filename, as_attachment=True)
+    print(json_file)
+    zip_path, filename = json2zip.generate_zip(json_file)
+    return send_from_directory(directory=zip_path, path=filename, as_attachment=True)
 
 
 @app.route("/logout")

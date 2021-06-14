@@ -1,30 +1,62 @@
 import json
 import os
-from pprint import pprint
+import shutil
 from docxtpl import DocxTemplate
-dirname = os.path.dirname(__file__)
-
-json_path = os.path.join(dirname, 'static', 'json',
-                         'don-dadless_13_06_2021_124956_AM.json')
-json_file = open(json_path, 'r')
-json_obj = json.load(json_file)
-
-project_name = json_obj['project_name']
-common_fields_obj = json_obj['common_fields']
-specific_fields = {}
-for key, value in json_obj['specific_fields'].items():
-    x = 1
-
-template_path = os.path.join(dirname, 'template.docx')
+from werkzeug.utils import secure_filename
 
 
-def json2dx_common(template, common_fields_obj, dummy_image_name, new_image_name, doc_file_name):
-    doc = DocxTemplate(template)
-    context = common_fields_obj
-    doc.replace_pic(dummy_image_name, new_image_name)
-    doc.render(context)
-    doc.save(doc_file_name)
-    print('Generated!')
+def generate_zip(name):
 
+    dirname = os.path.dirname(__file__)
+    json_path = os.path.join(dirname, 'static', 'json', name)
+    json_file = open(json_path, 'r')
+    json_obj = json.load(json_file)
 
-json2dx_common(template_path, common_fields_obj, 'Picture 1', '22.jpg', 'brand.docx')
+    # all_json_list = [f for f in os.listdir(
+    #     dirname) if os.path.isfile(os.path.join(dirname, f))]
+
+    def MergeDict(dict1, dict2):
+        return(dict2.update(dict1))
+
+    def get_temp_list():
+        doc_list = []
+        for key, value in json_obj['specific_fields'].items():
+            doc_list.append(key)
+        return doc_list
+
+    def json2dx_common(template_name, dummy_image_name, new_image_name):
+        template_path = os.path.join(dirname, 'docx', template_name)
+        common_fields_obj = json_obj['common_fields']
+        specific_fields_obj = json_obj['specific_fields'][template_name]
+
+        all_fields_obj = common_fields_obj.copy()
+
+        all_fields_obj.update(specific_fields_obj)
+        doc = DocxTemplate(template_path)
+        doc.replace_pic(dummy_image_name, new_image_name)
+        doc.render(all_fields_obj)
+        path = os.path.join(dirname, 'temp', 'vm_' + template_name)
+        doc.save(path)
+
+    ##main##
+
+    if not os.path.exists(dirname+'/temp'):
+        os.makedirs(dirname+'/temp')
+
+    for tpl in get_temp_list():
+        dummy_image_name = 'Picture 1'
+        new_image_name = os.path.join(
+            dirname, 'instance/uploads', json_obj['common_fields']['filename'])
+        json2dx_common(tpl, dummy_image_name, new_image_name)
+
+    if not os.path.exists('zips'):
+        os.makedirs('zips')
+    zip_name = secure_filename(json_obj['project_name'])
+    zip_path = 'zips/zip_'+zip_name
+    shutil.make_archive(zip_path, 'zip', 'temp')
+    shutil.rmtree('temp')
+    zip_path = os.path.join(dirname, 'zips')
+    print(zip_path)
+    print(zip_name)
+
+    return (zip_path, 'zip_'+zip_name+'.zip')
