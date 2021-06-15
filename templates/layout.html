@@ -34,8 +34,8 @@
           </div>
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-            <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+            <a class="d-lg-none" class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+            <a class="d-lg-none" class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
           </div>
         </div>
       </div>
@@ -99,6 +99,16 @@
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl)
     })
+  </script>
+  <script>
+    function shiftBuild(event) {
+      if (event.shiftKey) {
+        alert("Shift key is pressed.");
+      }
+      else {
+        alert("Shift key is not pressed.");
+      }
+    }
   </script>
 
 </body>

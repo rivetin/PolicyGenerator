@@ -16,7 +16,17 @@ dirname = os.path.dirname(__file__)
 # returns date as string
 
 
+def lloogg(s, x):
+    if s == "b":
+        print('--------------------------------------------')
+        print(f'{x}')
+        print('--------------------------------------------')
+    if s == "s":
+        print(f'{x}')
+
+
 def date_string(x):
+    lloogg("s", "Date returned")
     if x == 'stamp':
         return datetime. now(). strftime("_%d_%m_%Y_%I:%M:%S_%p")
     if x == 'homelog':
@@ -26,6 +36,7 @@ def date_string(x):
 
 
 def file_dict():
+    lloogg("s", "Traversing dir folder : - Retrived")
     path = os.path.join(dirname, 'docx')
     dir_list = os.listdir(path)
     dict_dir = {}
@@ -34,6 +45,7 @@ def file_dict():
         item = item.split(".")[0]
         dict_dir["{0}".format(x)] = item
         x += 1
+    lloogg("b", "Traversing dir folder : - Retrived")
     return dict_dir
 
 
@@ -61,11 +73,13 @@ os.makedirs(uploads_dir, exist_ok=True)
 @app.route("/")
 @app.route("/home")
 def home():
+    lloogg("b", "Someone is Home")
     return render_template('home.html', posts=logs)
 
 
 @app.route("/build", methods=['GET', 'POST'])
 def build():
+    lloogg("b", "Someone is trying to build")
     dict_items = file_dict()
     form = BuildForm()
     if form.validate_on_submit():
@@ -147,17 +161,20 @@ def build():
         open_file.close()
 
         flash(f'Json create success 💔', 'success')
+        lloogg("b", "Built done")
         return redirect(url_for('home'))
     return render_template('build.html', title='Build', form=form, dict_item=dict_items)
 
 
 @app.route('/download/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
+    lloogg("b", "Download Initiated")
     # Appending app path to upload folder path within app root folder
-    json_file = os.path.join(dirname, 'static\json', filename)
+    json_file = os.path.join(dirname, 'static/json', filename)
     # Returning file from appended path
     print(json_file)
     zip_path, filename = json2zip.generate_zip(json_file)
+    lloogg("b", "download done")
     return send_from_directory(directory=zip_path, path=filename, as_attachment=True)
 
 
@@ -168,8 +185,22 @@ def logout():
     return redirect(url_for('login'))
 
 
+@app.route('/deleteLog/<path:log>', methods=['GET', 'POST'])
+def deleteLog(log):
+    for i in range(len(logs)):
+        if logs[i]['title'] == log:
+            del logs[i]
+            print(f'log with title -- {log} was deleted')
+            flash(
+                f'Log with title -- {log} was deleted this cannot be reversed 🥴', 'danger')
+            break
+
+    return redirect(url_for('home'))
+
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    lloogg("b", "Register initiated")
     form = RegistrationForm()
     if form.validate_on_submit():
         flash(f'Account created for {form.username.data}!', 'success')
@@ -179,6 +210,7 @@ def register():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    lloogg("b", "Someone accessed login")
     form = LoginForm()
     if form.validate_on_submit():
         if form.email.data == 'athul@com.com' and form.password.data == 'password':

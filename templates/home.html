@@ -19,9 +19,14 @@
       <small class="text-muted">{{ post.date_posted }}</small>
     </div>
     {% set url = url_for('download', filename=post.json) %}
-    <h2><a class="article-title" href="{{ url }}">{{
+    <h2 data-bs-toggle="tooltip" data-bs-placement="Right"><a class="article-title" href="{{ url }}">{{
         post.title }}</a></h2>
     <p class="article-content">{{ post.content }}</p>
+    {% set log2del = url_for('deleteLog', log=post.title) %}
+    <a href="{{ log2del }}" style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="Right"
+      title="Delete">
+      <button type="button" class="btn btn-light">Delete</button>
+    </a>
   </div>
 </article>
 {% endfor %}
