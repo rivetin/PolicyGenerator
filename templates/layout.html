@@ -34,8 +34,8 @@
           </div>
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
-            <a class="d-lg-none" class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-            <a class="d-lg-none" class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+            <a style="display: none;" class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+            <a style="display: none;" class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
           </div>
         </div>
       </div>
@@ -103,10 +103,10 @@
   <script>
     function shiftBuild(event) {
       if (event.shiftKey) {
-        alert("Shift key is pressed.");
+        console.log("shift click function")
       }
       else {
-        alert("Shift key is not pressed.");
+        console.log("!shift click function")
       }
     }
   </script>
