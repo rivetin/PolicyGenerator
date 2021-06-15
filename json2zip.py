@@ -9,7 +9,12 @@ def generate_zip(name):
 
     dirname = os.path.dirname(__file__)
     json_path = os.path.join(dirname, 'static', 'json', name)
-    json_file = open(json_path, 'r')
+
+    if(os.path.isfile(json_path)):
+        json_file = open(json_path, 'r')
+    else:
+        return (False, False)
+
     json_obj = json.load(json_file)
 
     # all_json_list = [f for f in os.listdir(

@@ -60,10 +60,24 @@ app.config['SECRET_KEY'] = os.environ.get(
 
 # please dont open the pkl file it might corrept the file.
 log_file_path = os.path.join(dirname, 'static', 'logs', 'logs.pkl')
-open_file = open(log_file_path, "rb")
-logs = pickle.load(open_file)
-
-open_file.close()
+if(os.path.isfile(log_file_path)):
+    print('Log file fetched')
+    open_file = open(log_file_path, "rb")
+    logs = pickle.load(open_file)
+    open_file.close()
+else:
+    print('no logfile')
+    open_file = open(log_file_path, "wb")
+    logs = pickle.load(open_file)
+    log = {
+        'author': '',
+        'title': 'Log file was not found',
+        'content': 'none',
+        'date_posted': date_string('homelog'),
+        'json': 'none'}
+    logs.append(log)
+    pickle.dump(logs, open_file)
+    open_file.close()
 
 
 uploads_dir = os.path.join(app.instance_path, 'uploads')
@@ -147,6 +161,7 @@ def build():
         out_file_path = os.path.join(dirname, 'static', 'json', out_file_name)
         out_file = open(out_file_path, 'w')
         json.dump(json_dict, out_file, indent=5)
+        out_file.close()
 
         log = {
             'author': g_user,
@@ -174,6 +189,10 @@ def download(filename):
     # Returning file from appended path
     print(json_file)
     zip_path, filename = json2zip.generate_zip(json_file)
+    if zip_path == False:
+        flash(f'File was deleted 😿', 'danger')
+        return redirect(url_for('home'))
+
     lloogg("b", "download done")
     return send_from_directory(directory=zip_path, path=filename, as_attachment=True)
 
