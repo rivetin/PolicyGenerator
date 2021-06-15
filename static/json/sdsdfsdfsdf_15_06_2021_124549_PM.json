@@ -1,0 +1,21 @@
+{
+     "project_name": "sdsdfsdfsdf",
+     "common_fields": {
+          "filename": "favicon_15_06_2021_124549_PM.png",
+          "company_full_name": "dfdfgdfdfh",
+          "company_short_name": "dfdfgdfdfh",
+          "ciso_name": "dfdfgdfdfh",
+          "hrman_name": "dfdfgdfdfh",
+          "itsec_name": "dfdfgdfdfh",
+          "ithelp_name": "dfdfgdfdfh",
+          "doc_ref": "dfdfgdfdfh"
+     },
+     "specific_fields": {
+          "temp1.docx": {
+               "data_author": "dfdfgdfdfh",
+               "data_classification": "dfdfgdfdfh",
+               "data_date": "dfdfgdfdfh",
+               "data_owner": "dfdfgdfdfh"
+          }
+     }
+}

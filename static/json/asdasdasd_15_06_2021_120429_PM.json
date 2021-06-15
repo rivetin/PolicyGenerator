@@ -1,0 +1,21 @@
+{
+     "project_name": "asdasdasd",
+     "common_fields": {
+          "filename": "favicon_15_06_2021_120429_PM.png",
+          "company_full_name": "asdasd",
+          "company_short_name": "asdasdasd",
+          "ciso_name": "asdasdasd",
+          "hrman_name": "asdasdasd",
+          "itsec_name": "asdasdasd",
+          "ithelp_name": "asdasdasd",
+          "doc_ref": "asdasdasd"
+     },
+     "specific_fields": {
+          "temp4.docx": {
+               "data_author": "asdasdasd",
+               "data_classification": "asdasdasd",
+               "data_date": "sdasdasd",
+               "data_owner": "asdasdasd"
+          }
+     }
+}
