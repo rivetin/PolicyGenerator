@@ -1,0 +1,21 @@
+{
+     "project_name": "serverTest",
+     "common_fields": {
+          "filename": "580b57fcd9996e24bc43c53e_15_06_2021_091701_AM.png",
+          "company_full_name": "ServerTest",
+          "company_short_name": "ServerTest",
+          "ciso_name": "ServerTest",
+          "hrman_name": "ServerTest",
+          "itsec_name": "ServerTest",
+          "ithelp_name": "ServerTest",
+          "doc_ref": "ServerTest"
+     },
+     "specific_fields": {
+          "temp1.docx": {
+               "data_author": "ServerTest",
+               "data_classification": "ServerTest",
+               "data_date": "ServerTest",
+               "data_owner": "ServerTest"
+          }
+     }
+}

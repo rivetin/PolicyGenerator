@@ -1,0 +1,21 @@
+{
+     "project_name": "ServerTest123",
+     "common_fields": {
+          "filename": "manuel-boxler--CZERTBlepA-unsplash_15_06_2021_095729_AM.jpg",
+          "company_full_name": "ServerTest123",
+          "company_short_name": "ServerTest123",
+          "ciso_name": "ServerTest123",
+          "hrman_name": "ServerTest123",
+          "itsec_name": "ServerTest123",
+          "ithelp_name": "ServerTest123",
+          "doc_ref": "ServerTest123"
+     },
+     "specific_fields": {
+          "temp1.docx": {
+               "data_author": "ServerTest123",
+               "data_classification": "ServerTest123",
+               "data_date": "ServerTest123",
+               "data_owner": "ServerTest123"
+          }
+     }
+}

@@ -154,7 +154,7 @@ def build():
 @app.route('/download/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
     # Appending app path to upload folder path within app root folder
-    json_file = os.path.join(dirname, 'static\json', filename)
+    json_file = os.path.join(dirname, './static/json', filename)
     # Returning file from appended path
     print(json_file)
     zip_path, filename = json2zip.generate_zip(json_file)
