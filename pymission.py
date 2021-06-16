@@ -113,6 +113,10 @@ def build():
         itsec_name = form.itsec_name.data
         ithelp_name = form.ithelp_name.data
         doc_ref = form.doc_ref.data
+        data_author = form.data_author.data
+        data_classification = form.data_classification.data
+        data_date = form.data_date.data
+        data_owner = form.data_owner.data
 
         if session.get('user'):
             g_user = session.get('user')
@@ -129,7 +133,11 @@ def build():
                 'hrman_name': hrman_name,
                 'itsec_name': itsec_name,
                 'ithelp_name': ithelp_name,
-                'doc_ref': doc_ref
+                'doc_ref': doc_ref,
+                'data_author': data_author,
+                'data_classification': data_author,
+                'data_date': data_author,
+                'data_owner': data_author
             },
             'specific_fields': {
 

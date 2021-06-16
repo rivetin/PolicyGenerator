@@ -131,6 +131,62 @@
                 {{ form.doc_ref(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+            <div class="form-group">
+                {{ form.data_author.label(class="form-control-label") }}
+
+                {% if form.data_author.errors %}
+                {{ form.data_author(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.data_author.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.data_author(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.data_classification.label(class="form-control-label") }}
+
+                {% if form.data_classification.errors %}
+                {{ form.data_classification(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.data_classification.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.data_classification(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.data_date.label(class="form-control-label") }}
+
+                {% if form.data_date.errors %}
+                {{ form.data_date(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.data_date.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.data_date(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.data_owner.label(class="form-control-label") }}
+
+                {% if form.data_owner.errors %}
+                {{ form.data_owner(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.data_owner.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.data_owner(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
             {% for key, value in dict_item.items() %}
             <div>
                 <div class="form-check">

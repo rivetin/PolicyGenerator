@@ -43,4 +43,12 @@ class BuildForm(FlaskForm):
                               DataRequired(), Length(min=2, max=100)])
     doc_ref = StringField('Doc ref prefix', validators=[
                           DataRequired(), Length(min=2, max=100)])
-    submit = SubmitField('Build')
+    data_author = StringField('Data Author', validators=[
+        DataRequired(), Length(min=2, max=100)])
+    data_classification = StringField('Data Classification', validators=[
+        DataRequired(), Length(min=2, max=100)])
+    data_date = StringField('Data Date', validators=[
+        DataRequired(), Length(min=2, max=100)])
+    data_owner = StringField('Data Owner', validators=[
+        DataRequired(), Length(min=2, max=100)])
+    submit = SubmitField('Build!')

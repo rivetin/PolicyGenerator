@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+from pprint import pprint
 from docxtpl import DocxTemplate
 from werkzeug.utils import secure_filename
 
@@ -12,16 +13,12 @@ def generate_zip(name):
 
     if(os.path.isfile(json_path)):
         json_file = open(json_path, 'r')
+        json_obj = json.load(json_file)
     else:
         return (False, False)
 
-    json_obj = json.load(json_file)
-
     # all_json_list = [f for f in os.listdir(
     #     dirname) if os.path.isfile(os.path.join(dirname, f))]
-
-    def MergeDict(dict1, dict2):
-        return(dict2.update(dict1))
 
     def get_temp_list():
         doc_list = []
@@ -36,7 +33,10 @@ def generate_zip(name):
 
         all_fields_obj = common_fields_obj.copy()
 
+        specific_fields_obj = {k: v for k,
+                               v in specific_fields_obj.items() if v}
         all_fields_obj.update(specific_fields_obj)
+
         doc = DocxTemplate(template_path)
         doc.replace_pic(dummy_image_name, new_image_name)
         doc.render(all_fields_obj)
