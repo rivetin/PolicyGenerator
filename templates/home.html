@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 {% if session.get('user') %}
-<div class="border-top border-bottom pb-3 pt-3">
+<div class="border-top border-bottom mb-3 pb-3 pt-3">
   <div class="font-weight-light">
     Hey
     <a href="{{ url_for('logout') }}" style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top"
@@ -19,11 +19,12 @@
       <small class="text-muted">{{ post.date_posted }}</small>
     </div>
     {% set url = url_for('download', filename=post.json) %}
-    <h2 data-bs-toggle="tooltip" data-bs-placement="Right"><a class="article-title" href="{{ url }}">{{
+    <h2 data-bs-toggle="tooltip" data-bs-placement="top" title="Download {{ post.title }} as Zip file"><a
+        class="article-title" href="{{ url }}">{{
         post.title }}</a></h2>
     <p class="article-content">{{ post.content }}</p>
     {% set log2del = url_for('deleteLog', log=post.title) %}
-    <a href="{{ log2del }}" style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="Right"
+    <a href="{{ log2del }}" style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top"
       title="Delete">
       <button type="button" class="btn btn-light">Delete</button>
     </a>

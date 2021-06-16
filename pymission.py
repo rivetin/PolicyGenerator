@@ -2,14 +2,18 @@ import os
 import json
 import pickle
 import json2zip
+import sqlite3
+import hashlib
 from dotenv import load_dotenv
 from datetime import datetime
-from flask import Flask, render_template, sessions, url_for, flash, redirect, request, session, send_from_directory
+from flask import Flask, render_template, sessions, url_for, flash, redirect, request, session, send_from_directory, g
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from forms import BuildForm, RegistrationForm, LoginForm
 from werkzeug.utils import secure_filename
 
 
 dirname = os.path.dirname(__file__)
+
 
 # used by log object to set logs listed in the home page
 
@@ -58,7 +62,48 @@ app.config['SECRET_KEY'] = os.environ.get(
     'SECRET_KEY')  # should use env --> done
 
 
-# please dont open the pkl file it might corrept the file.
+login_manager = LoginManager(app)
+login_manager.login_view = "login"
+login_manager.login_message_category = "danger"
+login_manager.session_protection = "strong"
+
+
+class User(UserMixin):
+    def __init__(self, id, email, password):
+        self.id = id
+        self.email = email
+        self.password = password
+        self.authenticated = False
+
+    def is_active(self):
+        return self.is_active()
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return self.authenticated
+
+    def is_active(self):
+        return True
+
+    def get_id(self):
+        return self.id
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    conn = sqlite3.connect(os.path.join(dirname, "db", "login.db"))
+    curs = conn.cursor()
+    curs.execute("SELECT * from login where user_id = (?)", [user_id])
+    lu = curs.fetchone()
+    if lu is None:
+        return None
+    else:
+        return User(int(lu[0]), lu[1], lu[2])
+
+
+# please dont try to open the pkl file it might corrept the file.
 log_file_path = os.path.join(dirname, 'static', 'logs', 'logs.pkl')
 if(os.path.isfile(log_file_path)):
     print('Log file fetched')
@@ -84,14 +129,45 @@ uploads_dir = os.path.join(app.instance_path, 'uploads')
 os.makedirs(uploads_dir, exist_ok=True)
 
 
-@app.route("/")
 @app.route("/home")
+@login_required
 def home():
     lloogg("b", "Someone is Home")
-    return render_template('home.html', posts=logs)
+    return render_template('home.html', title='Home', posts=logs)
+
+
+@app.route("/", methods=['GET', 'POST'])
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    lloogg("b", "Someone accessed login")
+    form = LoginForm()
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    if form.validate_on_submit():
+        conn = sqlite3.connect(os.path.join(dirname, "db", "login.db"))
+        curs = conn.cursor()
+        curs.execute("SELECT * FROM login where email = (?)",
+                     [form.email.data])
+        try:
+            user = list(curs.fetchone())
+            Us = load_user(user[0])
+        except:
+            flash(f'Incorrect email ', 'danger')
+            return redirect(url_for('login'))
+
+        if form.email.data == Us.email and form.password.data == Us.password:
+            login_user(Us, remember=form.remember.data)
+            Umail = list({form.email.data})[0].split('@')[0]
+            session['user'] = form.email.data
+            flash(f'You have been logged in 💟', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash('Email or password incorrect', 'danger')
+    return render_template('login.html', title='Login', form=form)
 
 
 @app.route("/build", methods=['GET', 'POST'])
+@login_required
 def build():
     lloogg("b", "Someone is trying to build")
     dict_items = file_dict()
@@ -190,6 +266,7 @@ def build():
 
 
 @app.route('/download/<path:filename>', methods=['GET', 'POST'])
+@login_required
 def download(filename):
     lloogg("b", "Download Initiated")
     # Appending app path to upload folder path within app root folder
@@ -205,14 +282,8 @@ def download(filename):
     return send_from_directory(directory=zip_path, path=filename, as_attachment=True)
 
 
-@app.route("/logout")
-def logout():
-    session.clear()
-    flash(f'Sad to see you go 😪', 'danger')
-    return redirect(url_for('login'))
-
-
 @app.route('/deleteLog/<path:log>', methods=['GET', 'POST'])
+@login_required
 def deleteLog(log):
     for i in range(len(logs)):
         if logs[i]['title'] == log:
@@ -226,6 +297,7 @@ def deleteLog(log):
 
 
 @app.route("/register", methods=['GET', 'POST'])
+@login_required
 def register():
     lloogg("b", "Register initiated")
     form = RegistrationForm()
@@ -235,19 +307,12 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    lloogg("b", "Someone accessed login")
-    form = LoginForm()
-    if form.validate_on_submit():
-        if form.email.data == 'athul@com.com' and form.password.data == 'password':
-            session['user'] = form.email.data
-            flash(
-                f'You have been logged in as { form.email.data } !', 'success')
-            return redirect(url_for('home'))
-        else:
-            flash('Login Unsuccessful. Please check username and password', 'danger')
-    return render_template('login.html', title='Login', form=form)
+@app.route("/logout")
+@login_required
+def logout():
+    session.clear()
+    flash(f'Sad to see you go 😪', 'danger')
+    return redirect(url_for('login'))
 
 
 if __name__ == '__main__':

@@ -12,9 +12,9 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
   {% if title %}
-  <title>Py Mission | {{ title }}</title>
+  <title>Policy Generator | {{ title }}</title>
   {% else %}
-  <title>Py Mission</title>
+  <title>Policy Generator</title>
   {% endif %}
 </head>
 
@@ -22,7 +22,7 @@
   <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
       <div class="container">
-        <a class="navbar-brand mr-4" href="/">Py Mission</a>
+        <a class="navbar-brand mr-4" href="/">Policy Generator</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
           aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -34,8 +34,8 @@
           </div>
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
-            <a style="display: none;" class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-            <a style="display: none;" class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+            <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+            <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
           </div>
         </div>
       </div>
