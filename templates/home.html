@@ -1,18 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-{% if session.get('user') %}
-<div class="border-top border-bottom mb-3 pb-3 pt-3">
-  <div class="font-weight-light">
-    Hey
-    <a href="{{ url_for('logout') }}" style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top"
-      title="Logout">
-      <i>{{ session.get('user') }}</i>
-    </a> &#9996;
-  </div>
-</div>
-{% endif %}
 {% for post in posts[::-1] %}
-<article class="media content-section">
+<article class="media content-section bg-body rounded ">
   <div class="media-body">
     <div class="article-metadata">
       <a class="mr-2" href="#">{{ post.author }}</a>

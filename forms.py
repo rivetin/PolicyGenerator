@@ -26,8 +26,8 @@ class LoginForm(FlaskForm):
 
 class template(FlaskForm):
     submit = SubmitField('Add')
-    template = FileField('Telplate', validators=[FileRequired(),
-                                                 FileAllowed(['docx'], 'Docx files only!')])
+    template = FileField('Choose template', validators=[FileRequired(),
+                                                        FileAllowed(['docx'], 'Docx files only!')])
 
 
 class BuildForm(FlaskForm):
