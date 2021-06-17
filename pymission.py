@@ -4,11 +4,12 @@ import pickle
 import json2zip
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
+from pprint import pprint
 from dotenv import load_dotenv
 from datetime import datetime
 from flask import Flask, render_template, sessions, url_for, flash, redirect, request, session, send_from_directory, g
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
-from forms import BuildForm, RegistrationForm, LoginForm
+from forms import BuildForm, RegistrationForm, LoginForm, template
 from werkzeug.utils import secure_filename
 
 
@@ -134,6 +135,25 @@ os.makedirs(uploads_dir, exist_ok=True)
 def home():
     lloogg("b", "Someone is Home")
     return render_template('home.html', title='Home', posts=logs)
+
+
+@app.route("/temp_view", methods=['GET', 'POST'])
+@login_required
+def temp_view():
+    form = template()
+    dict_temp = file_dict()
+    if form.validate_on_submit():
+        f = form.template.data
+        f.filename = f.filename.split(
+            '.')[0]+date_string('stamp')+'.'+f.filename.split('.')[1]
+        filename = secure_filename(f.filename)
+        f.save(os.path.join(
+            dirname, 'docx', filename
+        ))
+    dict_temp_list = list(dict_temp.values())
+    pprint(dict_temp_list)
+    lloogg("b", "Someone is temp_view")
+    return render_template('temp_view.html', title='temp_view', posts=dict_temp_list, form=form)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -298,6 +318,18 @@ def download(filename):
 
     lloogg("b", "download done")
     return send_from_directory(directory=zip_path, path=filename, as_attachment=True)
+
+
+@ app.route('/temp2del/<path:filename>', methods=['GET', 'POST'])
+@ login_required
+def temp2del(filename):
+    lloogg("b", "Delete temp initiated")
+    temp_path = os.path.join(dirname, 'docx', filename+'.docx')
+    os.remove(temp_path)
+    flash(f'File removed 😦', 'danger')
+
+    lloogg("b", "Delete temp done")
+    return redirect(url_for('temp_view'))
 
 
 @ app.route('/deleteLog/<path:log>', methods=['GET', 'POST'])

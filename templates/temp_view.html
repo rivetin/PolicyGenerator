@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if session.get('user') %}
+<div class="border-top border-bottom mb-3 pb-3 pt-3">
+  <div class="font-weight-light">
+    Hey
+    <a href="{{ url_for('logout') }}" style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top"
+      title="Logout">
+      <i>{{ session.get('user') }}</i>
+    </a> &#9996;
+  </div>
+</div>
+{% endif %}
+{% for post in posts %}
+<article class="media content-section">
+  <div class="media-body">
+
+    <!-- {% set url = url_for('download', filename=post.json) %} -->
+    <h2>{{ post }}</h2>
+
+    {% set temp2del = url_for('temp2del', filename=post) %}
+    <a href="{{ temp2del }}" style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top"
+      title="Remove">
+      <button type="button" class="btn btn-light">Remove</button>
+    </a>
+  </div>
+</article>
+{% endfor %}
+<form method="POST" action="" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+
+  <div class="form-group">
+    {{ form.template.label(class="form-control-label") }}
+
+    {% if form.template.errors %}
+    {{ form.template(class="form-control form-control-lg is-invalid") }}
+    <div class="invalid-feedback">
+      {% for error in form.template.errors %}
+      <span>{{ error }}</span>
+      {% endfor %}
+    </div>
+    {% else %}
+    {{ form.template(class="form-control form-control-lg") }}
+    {% endif %}
+  </div>
+
+  <div onclick="shiftBuild (event);" class="form-group">
+    {{ form.submit(class="btn btn-outline-info") }}
+  </div>
+</form>
+{% endblock content %}

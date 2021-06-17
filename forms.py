@@ -24,6 +24,12 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
+class template(FlaskForm):
+    submit = SubmitField('Add')
+    template = FileField('Telplate', validators=[FileRequired(),
+                                                 FileAllowed(['docx'], 'Docx files only!')])
+
+
 class BuildForm(FlaskForm):
     project_name = StringField(
         'Project Name', validators=[DataRequired(), Length(min=5, max=100)])
