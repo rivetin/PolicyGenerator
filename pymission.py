@@ -3,7 +3,7 @@ import json
 import pickle
 import json2zip
 import sqlite3
-import hashlib
+from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 from datetime import datetime
 from flask import Flask, render_template, sessions, url_for, flash, redirect, request, session, send_from_directory, g
@@ -136,8 +136,26 @@ def home():
     return render_template('home.html', title='Home', posts=logs)
 
 
-@app.route("/", methods=['GET', 'POST'])
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    lloogg("b", "Register initiated")
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        conn = sqlite3.connect(os.path.join(dirname, "db", "login.db"))
+        curs = conn.cursor()
+        email = form.email.data
+        username = form.username.data
+        password = generate_password_hash(form.password.data)
+        curs.execute(
+            "INSERT INTO login('email', 'password', 'username') VALUES(?,?,?)", (email, password, username))
+        conn.commit()
+        flash(f'Account created for {form.username.data}! 💚', 'success')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
+
+
+@ app.route("/", methods=['GET', 'POST'])
+@ app.route("/login", methods=['GET', 'POST'])
 def login():
     lloogg("b", "Someone accessed login")
     form = LoginForm()
@@ -152,22 +170,22 @@ def login():
             user = list(curs.fetchone())
             Us = load_user(user[0])
         except:
-            flash(f'Incorrect email ', 'danger')
+            flash(f'Email or password incorrect 😐', 'danger')
             return redirect(url_for('login'))
 
-        if form.email.data == Us.email and form.password.data == Us.password:
+        if form.email.data == Us.email and check_password_hash(Us.password, form.password.data):
             login_user(Us, remember=form.remember.data)
             Umail = list({form.email.data})[0].split('@')[0]
-            session['user'] = form.email.data
+            session['user'] = Umail
             flash(f'You have been logged in 💟', 'success')
             return redirect(url_for('home'))
         else:
-            flash('Email or password incorrect', 'danger')
+            flash('Email or password incorrect 😶', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 
-@app.route("/build", methods=['GET', 'POST'])
-@login_required
+@ app.route("/build", methods=['GET', 'POST'])
+@ login_required
 def build():
     lloogg("b", "Someone is trying to build")
     dict_items = file_dict()
@@ -265,8 +283,8 @@ def build():
     return render_template('build.html', title='Build', form=form, dict_item=dict_items)
 
 
-@app.route('/download/<path:filename>', methods=['GET', 'POST'])
-@login_required
+@ app.route('/download/<path:filename>', methods=['GET', 'POST'])
+@ login_required
 def download(filename):
     lloogg("b", "Download Initiated")
     # Appending app path to upload folder path within app root folder
@@ -282,8 +300,8 @@ def download(filename):
     return send_from_directory(directory=zip_path, path=filename, as_attachment=True)
 
 
-@app.route('/deleteLog/<path:log>', methods=['GET', 'POST'])
-@login_required
+@ app.route('/deleteLog/<path:log>', methods=['GET', 'POST'])
+@ login_required
 def deleteLog(log):
     for i in range(len(logs)):
         if logs[i]['title'] == log:
@@ -296,19 +314,8 @@ def deleteLog(log):
     return redirect(url_for('home'))
 
 
-@app.route("/register", methods=['GET', 'POST'])
-@login_required
-def register():
-    lloogg("b", "Register initiated")
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'success')
-        return redirect(url_for('home'))
-    return render_template('register.html', title='Register', form=form)
-
-
-@app.route("/logout")
-@login_required
+@ app.route("/logout")
+@ login_required
 def logout():
     session.clear()
     flash(f'Sad to see you go 😪', 'danger')
