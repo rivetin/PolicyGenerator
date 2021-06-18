@@ -194,7 +194,7 @@ def login():
             return redirect(url_for('login'))
 
         if form.email.data == Us.email and check_password_hash(Us.password, form.password.data):
-            login_user(Us, remember=form.remember.data)
+            login_user(Us)
             Umail = list({form.email.data})[0].split('@')[0]
             session['user'] = Umail
             flash(f'You have been logged in 💟', 'success')
