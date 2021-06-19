@@ -62,9 +62,9 @@
         <div class="border-top border-bottom mb-3 pb-3 pt-3">
           <div class="font-weight-light">
             Hey
-            <a href="{{ url_for('logout') }}" style="text-decoration: none;" data-bs-toggle="tooltip"
+            <a href="{{ url_for('logout') }}" target="_blank" style="text-decoration: none;" data-bs-toggle="tooltip"
               data-bs-placement=" " title="Logout">
-              <i>{{ session.get('user') }}</i>
+              <i>{{ session.get('user').name }}</i>
             </a> &#9996;
           </div>
         </div>
