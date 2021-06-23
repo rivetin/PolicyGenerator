@@ -48,16 +48,17 @@ def date_string(x):
 
 
 def file_dict():
-    lloogg("s", "Traversing dir folder : - Retrived")
+    lloogg("s", "Traversing dir folder : - Retrieved")
     path = os.path.join(dirname, 'docx')
     dir_list = os.listdir(path)
     dict_dir = {}
     x = 1
     for item in dir_list:
         item = item.split(".")[0]
-        dict_dir["{0}".format(x)] = item
+        dict_dir[f"{x}"] = item
         x += 1
-    lloogg("b", "Traversing dir folder : - Retrived")
+    print(dict_dir)
+    lloogg("b", "Traversing dir folder : - Retrieved")
     return dict_dir
 
 
@@ -299,8 +300,7 @@ def build():
             }
         }
 
-        x = {}
-        x = 1
+
         for key, value in dict_items.items():
             check = request.form.get(value)
             if check:
@@ -406,7 +406,7 @@ def logout():
     flash(f'Sad to see you go 😪', 'danger')
     return redirect(  # Also logout from your tenant's web session
         app_config.AUTHORITY + "/oauth2/v2.0/logout" +
-        "?post_logout_redirect_uri=" + url_for("home", _external=True))
+        "?post_logout_redirect_uri=" + url_for("login", _external=True))
 
 
 @app.route(app_config.REDIRECT_PATH)

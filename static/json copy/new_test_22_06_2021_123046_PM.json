@@ -1,0 +1,31 @@
+{
+     "project_name": "12233333",
+     "common_fields": {
+          "filename": "quino-al-33rKuZQfq5c-unsplash_22_06_2021_123046_PM.jpg",
+          "company_full_name": "sample_company_name",
+          "company_short_name": "sam_com",
+          "ciso_name": "Binoy",
+          "hrman_name": "Athul Baby",
+          "itsec_name": "Athul Baby",
+          "ithelp_name": "Athul Baby",
+          "doc_ref": "ismp -",
+          "data_author": "binoy",
+          "data_classification": "123123",
+          "data_date": "123123",
+          "data_owner": "Denncy"
+     },
+     "specific_fields": {
+          "temp1.docx": {
+               "data_author": "",
+               "data_classification": "",
+               "data_date": "",
+               "data_owner": ""
+          },
+          "test11.docx": {
+               "data_author": "",
+               "data_classification": "",
+               "data_date": "",
+               "data_owner": ""
+          }
+     }
+}

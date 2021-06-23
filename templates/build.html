@@ -188,13 +188,17 @@
                 {% endif %}
             </div>
             {% for key, value in dict_item.items() %}
+            {% set oldvalue = value %}
+            {% set value = value.split(' ') %}
+            {% set value = value|join('') %}
             <div>
                 <div class="form-check">
-                    <input class="form-check-input" id={{ value }} name={{ value }} type="checkbox" value=1>
-                    <label class="form-check-label" for={{ value }}>{{ value }}</label>
+                    <input class="form-check-input" id="{{ value }}" name="{{ oldvalue }}" type="checkbox" value=1>
+                    <label class="form-check-label" for="{{ value }}">{{ oldvalue }}</label>
                 </div>
-                <div class="selectt {{ value }}">
-                    <div class="form-group">
+                {% set split_list = value.split(' ') %}
+                <div class=" selectt {{ value }}">
+                    <div class=" form-group">
                         <label class="form-control-label" for="author-of-{{ value }}">author-of-{{ value }}</label>
 
 

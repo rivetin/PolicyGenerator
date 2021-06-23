@@ -1,0 +1,27 @@
+{
+     "project_name": "test123",
+     "common_fields": {
+          "filename": "reflection_map1_16_06_2021_114530_AM.jpg",
+          "company_full_name": "zynact",
+          "company_short_name": "zynact",
+          "ciso_name": "Athul Baby",
+          "hrman_name": "Athul Baby",
+          "itsec_name": "Athul Baby",
+          "ithelp_name": "Athul Baby",
+          "doc_ref": "kugiu"
+     },
+     "specific_fields": {
+          "temp1.docx": {
+               "data_author": "kjjgkhb",
+               "data_classification": "kuugiug",
+               "data_date": "ugghj",
+               "data_owner": "igigik"
+          },
+          "temp2.docx": {
+               "data_author": "oigougiu",
+               "data_classification": "ugkkj",
+               "data_date": "kgkhgkj",
+               "data_owner": "ougiug"
+          }
+     }
+}

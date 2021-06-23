@@ -103,7 +103,7 @@
   <script type="text/javascript">
     $(document).ready(function () {
       $('input[type="checkbox"]').click(function () {
-        var inputValue = $(this).attr("name");
+        var inputValue = $(this).attr("id");
         console.log(inputValue);
         $("." + inputValue).toggle();
       });

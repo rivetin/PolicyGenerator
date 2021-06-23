@@ -1,0 +1,18 @@
+{
+     "project_name": "test123",
+     "common_fields": {
+          "filename": "ECOM2_19_06_2021_043738_PM.jpg",
+          "company_full_name": "zynact",
+          "company_short_name": "zynact",
+          "ciso_name": "Athul Baby",
+          "hrman_name": "Athul Baby",
+          "itsec_name": "Athul Baby",
+          "ithelp_name": "Athul Baby",
+          "doc_ref": "wwwww",
+          "data_author": "2s",
+          "data_classification": "2s",
+          "data_date": "2s",
+          "data_owner": "2s"
+     },
+     "specific_fields": {}
+}

@@ -1,0 +1,25 @@
+{
+     "project_name": "new test",
+     "common_fields": {
+          "filename": "favicon_16_06_2021_093859_PM.png",
+          "company_full_name": "zynact",
+          "company_short_name": "zynact",
+          "ciso_name": "Athul Baby",
+          "hrman_name": "Athul Baby",
+          "itsec_name": "Athul Baby",
+          "ithelp_name": "Athul Baby",
+          "doc_ref": "1s",
+          "data_author": "2s",
+          "data_classification": "2s",
+          "data_date": "2s",
+          "data_owner": "2s"
+     },
+     "specific_fields": {
+          "temp1.docx": {
+               "data_author": "1o",
+               "data_classification": "2o",
+               "data_date": "3o",
+               "data_owner": ""
+          }
+     }
+}

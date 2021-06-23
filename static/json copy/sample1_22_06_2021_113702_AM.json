@@ -1,0 +1,31 @@
+{
+     "project_name": "sample1",
+     "common_fields": {
+          "filename": "mike-enerio-yPbBYE1pkHo-unsplash_22_06_2021_113702_AM.jpg",
+          "company_full_name": "zynactefsf",
+          "company_short_name": "zynact",
+          "ciso_name": "Athul Baby",
+          "hrman_name": "Athul Baby",
+          "itsec_name": "Athul Baby",
+          "ithelp_name": "Athul Baby",
+          "doc_ref": "wwwww",
+          "data_author": "authhh",
+          "data_classification": "authhh",
+          "data_date": "authhh",
+          "data_owner": "authhh"
+     },
+     "specific_fields": {
+          "temp1.docx": {
+               "data_author": "",
+               "data_classification": "ergersfgdf",
+               "data_date": "dfgdfgdf",
+               "data_owner": "dfdfgdfdfh"
+          },
+          "temp2.docx": {
+               "data_author": "213123",
+               "data_classification": "123123",
+               "data_date": "sefsefsef",
+               "data_owner": ""
+          }
+     }
+}

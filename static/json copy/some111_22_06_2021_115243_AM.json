@@ -1,0 +1,18 @@
+{
+     "project_name": "some111",
+     "common_fields": {
+          "filename": "quino-al-33rKuZQfq5c-unsplash_22_06_2021_115243_AM.jpg",
+          "company_full_name": "sample_company_name",
+          "company_short_name": "samp_com",
+          "ciso_name": "Binoy",
+          "hrman_name": "Athul Baby",
+          "itsec_name": "Athul Baby",
+          "ithelp_name": "it service desk",
+          "doc_ref": "isms - ",
+          "data_author": "AthulBaby",
+          "data_classification": "AthulBaby",
+          "data_date": "AthulBaby",
+          "data_owner": "AthulBaby"
+     },
+     "specific_fields": {}
+}
