@@ -8,8 +8,8 @@
     <h2>{{ post }}</h2>
 
     {% set temp2del = url_for('temp2del', filename=post) %}
-    <a href="{{ temp2del }}" style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top"
-      title="Remove">
+    <a onclick="return confirm('ABOUT TO DELETE THE TEMPLATE, WANT TO CONTINUE?');" href="{{ temp2del }}"
+      style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove">
       <button type="button" class="btn btn-light">Remove</button>
     </a>
   </div>

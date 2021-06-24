@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<article class="media content-section bg-body rounded ">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">Json</a>
+            <small class="text-muted">Delete Json</small>
+        </div>
+        <h2 data-bs-toggle="tooltip" data-bs-placement="top" title="Delete json">Json</h2>
+        {% set dellall = url_for('deleteAll', type='json') %}
+        <a onclick="return confirm('AL JSONS WILL BE LOST, WANT TO CONTINUE?');" href="{{ dellall }}"
+            style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Json">
+            <button type="button" class="btn btn-danger">Delete All Configs</button>
+        </a>
+    </div>
+</article>
+
+<article class="media content-section bg-body rounded ">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">Logs</a>
+            <small class="text-muted">Delete Logs</small>
+        </div>
+        <h2 data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Logs">Logs</h2>
+        {% set dellall = url_for('deleteAll', type='logs') %}
+        <a onclick="return confirm('ALL LOGS WILL BE LOST, WANT TO CONTINUE?');" href="{{ dellall }}"
+            style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Logs">
+            <button type="button" class="btn btn-danger">Delete ALl Logs</button>
+        </a>
+    </div>
+</article>
+
+<article class="media content-section bg-body rounded ">
+    <div class="media-body">
+        <h2 data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Zips">Zips</h2>
+        {% set dellall = url_for('deleteAll', type='zips') %}
+        <a onclick="return confirm('ALL ZIPS WILL BE LOST, WANT TO CONTINUE?');" href="{{ dellall }}"
+            style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Zips">
+            <button type="button" class="btn btn-danger">Delete All Zips</button>
+        </a>
+    </div>
+</article>
+
+<article class="media content-section bg-body rounded red ">
+    <div class="media-body">
+        <h2 data-bs-toggle="tooltip" data-bs-placement="top" title="Delete All">Delete All</h2>
+        {% set dellall = url_for('deleteAll', type='All') %}
+        <a onclick="return confirm('EVERYTHING WILL BE LOST, WANT TO CONTINUE?');" href="{{ dellall }}"
+            style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete All">
+            <button type="button" class="btn btn-danger">Delete All Zips</button>
+        </a>
+    </div>
+</article>
+
+{% endblock content %}

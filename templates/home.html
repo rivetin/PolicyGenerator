@@ -13,8 +13,8 @@
         post.title }}</a></h2>
     <p class="article-content">{{ post.content }}</p>
     {% set log2del = url_for('deleteLog', log=post.title) %}
-    <a href="{{ log2del }}" style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top"
-      title="Delete">
+    <a onclick="return confirm('ABOUT TO DELETE, WANT TO CONTINUE?');" href="{{ log2del }}"
+      style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
       <button type="button" class="btn btn-light">Delete</button>
     </a>
   </div>

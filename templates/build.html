@@ -187,54 +187,79 @@
                 {{ form.data_owner(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
-            {% for key, value in dict_item.items() %}
-            {% set oldvalue = value %}
-            {% set value = value.split(' ') %}
-            {% set value = value|join('') %}
-            <div>
-                <div class="form-check">
-                    <input class="form-check-input" id="{{ value }}" name="{{ oldvalue }}" type="checkbox" value=1>
-                    <label class="form-check-label" for="{{ value }}">{{ oldvalue }}</label>
-                </div>
-                {% set split_list = value.split(' ') %}
-                <div class=" selectt {{ value }}">
-                    <div class=" form-group">
-                        <label class="form-control-label" for="author-of-{{ value }}">author-of-{{ value }}</label>
+            <button type="button" onclick="selects()" class="btn btn-outline-info">Check All ⬇ </button>
+            <button type="button" onclick="deSelect()" class="btn btn-outline-info">unCheck All ⬆ </button>
+            <table id="datatable1" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Templates</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in dict_item.items() %}
+                    {% set oldvalue = value %}
+                    {% set value = value.split(' ') %}
+                    {% set value = value|join('') %}
+
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" id="{{ value }}" name="{{ oldvalue }}" type="checkbox"
+                                    value=1>
+                                <label class="form-check-label" for="{{ value }}">{{ oldvalue }}</label>
+                            </div>
+                            {% set split_list = value.split(' ') %}
+                            <div id="div{{ value }}" class=" selectt {{ value }}">
+                                <div class=" form-group">
+                                    <label class="form-control-label" for="author-of-{{ value }}">author-of-{{ value
+                                        }}</label>
 
 
-                        <input class="form-control form-control-lg" id="author-of-{{ value }}"
-                            name="author-of-{{ value }}" type="text" value="">
+                                    <input class="form-control form-control-lg" id="author-of-{{ value }}"
+                                        name="author-of-{{ value }}" type="text" value="">
 
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="classification-of-{{ value }}">classification-of-{{ value
-                            }}</label>
-
-
-                        <input class="form-control form-control-lg" id="classification-of-{{ value }}"
-                            name="classification-of-{{ value }}" type="text" value="">
-
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="Date-of-{{ value }}-creation">Date-of-{{ value
-                            }}-creation</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label"
+                                        for="classification-of-{{ value }}">classification-of-{{
+                                        value
+                                        }}</label>
 
 
-                        <input class="form-control form-control-lg" id="Date-of-{{ value }}-creation"
-                            name="Date-of-{{ value }}-creation" type="text" value="">
+                                    <input class="form-control form-control-lg" id="classification-of-{{ value }}"
+                                        name="classification-of-{{ value }}" type="text" value="">
 
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="Owner-of-{{ value }}">Owner-of-{{ value }}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="Date-of-{{ value }}-creation">Date-of-{{
+                                        value
+                                        }}-creation</label>
 
 
-                        <input class="form-control form-control-lg" id="Owner-of-{{ value }}"
-                            name="Owner-of-{{ value }}" type="text" value="">
+                                    <input class="form-control form-control-lg" id="Date-of-{{ value }}-creation"
+                                        name="Date-of-{{ value }}-creation" type="text" value="">
 
-                    </div>
-                </div>
-            </div>
-            {%endfor%}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="Owner-of-{{ value }}">Owner-of-{{ value
+                                        }}</label>
+
+
+                                    <input class="form-control form-control-lg" id="Owner-of-{{ value }}"
+                                        name="Owner-of-{{ value }}" type="text" value="">
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Templates</th>
+                    </tr>
+                </tfoot>
+            </table>
         </fieldset>
         <div onclick="shiftBuild (event);" class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}

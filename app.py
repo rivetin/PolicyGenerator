@@ -1,6 +1,5 @@
 import os
 import json
-import pickle
 import json2zip
 import sqlite3
 import uuid
@@ -300,7 +299,6 @@ def build():
             }
         }
 
-
         for key, value in dict_items.items():
             check = request.form.get(value)
             if check:
@@ -360,6 +358,14 @@ def download(filename):
     return send_from_directory(directory=zip_path, path=filename, as_attachment=True)
 
 
+@app.route("/delete")
+def delete():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    lloogg("b", "Someone is deleting")
+    return render_template('delete.html', title='Home', logs=logs, user=session["user"], version=msal.__version__)
+
+
 @ app.route('/temp2del/<path:filename>', methods=['GET', 'POST'])
 @ login_required
 def temp2del(filename):
@@ -370,6 +376,66 @@ def temp2del(filename):
 
     lloogg("b", "Delete temp done")
     return redirect(url_for('temp_view'))
+
+
+@ app.route('/deleteAll/<path:type>', methods=['GET', 'POST'])
+@ login_required
+def deleteAll(type):
+    if type == "zips":
+        lloogg("b", "Delete All Zips initiated")
+        file_path = os.path.join(dirname, 'zips')
+        for file in os.scandir(file_path):
+            if file.name.endswith(".zip"):
+                os.unlink(file.path)
+
+        lloogg("b", "All zips deleted")
+        flash(f'All Zip files where deleted 🙃', 'danger')
+        return redirect(url_for('delete'))
+
+    if type == "logs":
+        logs = []
+        logs_up(logs)
+
+        lloogg("b", "All Logs deleted")
+        flash(f'All Logs files where deleted 🙃', 'danger')
+        return redirect(url_for('delete'))
+
+    if type == "json":
+        lloogg("b", "Delete All Json Configs initiated")
+        file_path = os.path.join(dirname, 'static/json')
+        for file in os.scandir(file_path):
+            if file.name.endswith(".json"):
+                os.unlink(file.path)
+
+        lloogg("b", "All Json Configs deleted")
+        return redirect(url_for('delete'))
+
+    if type == "All":
+        # jsonnn
+        lloogg("b", "Delete All Json Configs initiated")
+        file_path = os.path.join(dirname, 'static/json')
+        for file in os.scandir(file_path):
+            if file.name.endswith(".json"):
+                os.unlink(file.path)
+
+        lloogg("b", "All Json Configs deleted")
+
+        # logsss
+        logs = []
+        logs_up(logs)
+
+        lloogg("b", "All Logs deleted")
+
+        # Zipss
+        lloogg("b", "Delete All Zips initiated")
+        file_path = os.path.join(dirname, 'zips')
+        for file in os.scandir(file_path):
+            if file.name.endswith(".zip"):
+                os.unlink(file.path)
+
+        lloogg("b", "All zips deleted")
+        flash(f'Everything Deleted 🙃', 'danger')
+        return redirect(url_for('delete'))
 
 
 @ app.route('/deleteLog/<path:log>', methods=['GET', 'POST'])
@@ -385,7 +451,6 @@ def deleteLog(log):
                 f'Log with title -- {log} was deleted this cannot be reversed 🥴', 'danger')
             print('file deleted')
             break
-    pprint(logs)
     return redirect(url_for('home'))
 
 
