@@ -21,15 +21,19 @@ def generate_zip(name):
     #     dirname) if os.path.isfile(os.path.join(dirname, f))]
 
     def get_temp_list():
-        doc_list = []
-        for key, value in json_obj['specific_fields'].items():
-            doc_list.append(key)
-        return doc_list
+        template_path = []
+        for keys, values in json_obj['specific_fields'].items():
+            for key in values:
+                key = os.path.join(dirname, 'docx', keys, key)
+                template_path.append(key)
+        return template_path
 
-    def json2dx_common(template_name, dummy_image_name, new_image_name):
-        template_path = os.path.join(dirname, 'docx', template_name)
+    def json2dx_common(template_path, dummy_image_name, new_image_name):
+        template_name = os.path.split(os.path.splitdrive(template_path)[1])[1]
+        group_name = os.path.split(os.path.split(
+            os.path.splitdrive(template_path)[1])[0])[1]
         common_fields_obj = json_obj['common_fields']
-        specific_fields_obj = json_obj['specific_fields'][template_name]
+        specific_fields_obj = json_obj['specific_fields'][group_name][template_name]
 
         all_fields_obj = common_fields_obj.copy()
 
@@ -48,11 +52,11 @@ def generate_zip(name):
     if not os.path.exists(dirname+'/temp'):
         os.makedirs(dirname+'/temp')
 
-    for tpl in get_temp_list():
+    for template_path in get_temp_list():
         dummy_image_name = 'Picture 1'
         new_image_name = os.path.join(
             dirname, 'instance/uploads', json_obj['common_fields']['filename'])
-        json2dx_common(tpl, dummy_image_name, new_image_name)
+        json2dx_common(template_path, dummy_image_name, new_image_name)
 
     if not os.path.exists('zips'):
         os.makedirs('zips')

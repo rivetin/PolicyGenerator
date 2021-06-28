@@ -1,40 +1,62 @@
 {% extends "layout.html" %}
 {% block content %}
-{% for post in posts %}
-<article class="media content-section">
-  <div class="media-body">
+<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+  {% for keys in posts %}
 
-    <!-- {% set url = url_for('download', filename=post.json) %} -->
-    <h2>{{ post }}</h2>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="ex3-tab-{{ loop.index }}" data-mdb-toggle="pill" href="#{{ keys }}" role="tab"
+      aria-controls="ex3-pills-1" aria-selected="true">{{ keys }}</a>
+  </li>
 
-    {% set temp2del = url_for('temp2del', filename=post) %}
-    <a onclick="return confirm('ABOUT TO DELETE THE TEMPLATE, WANT TO CONTINUE?');" href="{{ temp2del }}"
-      style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove">
-      <button type="button" class="btn btn-light">Remove</button>
-    </a>
+  {% endfor %}
+</ul>
+
+
+<div class="tab-content" id="ex2-content">
+  {% for keys in posts %}
+  <div class="tab-pane fade" id="{{ keys }}" role="tabpanel" aria-labelledby="ex3-tab-{{ loop.index }}">
+
+    {% for post in posts[keys] %}
+    <article class="media content-section">
+      <div class="media-body">
+
+        <!-- {% set url = url_for('download', filename=post.json) %} -->
+        <h2>{{ post }}</h2>
+
+        {% set temp2del = url_for('temp2del', filename=post, key=keys) %}
+        <a onclick="return confirm('ABOUT TO DELETE THE TEMPLATE, WANT TO CONTINUE?');" href="{{ temp2del }}"
+          style="text-decoration: none;" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove">
+          <button type="button" class="btn btn-light">Remove</button>
+        </a>
+      </div>
+    </article>
+    {% endfor %}
+    <form method="POST" action="" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        {{ form.template.label(class="form-control-label") }}
+
+        {% if form.template.errors %}
+        {{ form.template(class="form-control form-control-lg is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.template.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %}
+        {{ form.template(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+      <div class="form-group">
+        <input type="hidden" name="group" value="{{ keys }}">
+      </div>
+
+      <div onclick="shiftBuild (event);" class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+      </div>
+    </form>
   </div>
-</article>
-{% endfor %}
-<form method="POST" action="" enctype="multipart/form-data">
-  {{ form.hidden_tag() }}
-
-  <div class="form-group">
-    {{ form.template.label(class="form-control-label") }}
-
-    {% if form.template.errors %}
-    {{ form.template(class="form-control form-control-lg is-invalid") }}
-    <div class="invalid-feedback">
-      {% for error in form.template.errors %}
-      <span>{{ error }}</span>
-      {% endfor %}
-    </div>
-    {% else %}
-    {{ form.template(class="form-control form-control-lg") }}
-    {% endif %}
-  </div>
-
-  <div onclick="shiftBuild (event);" class="form-group">
-    {{ form.submit(class="btn btn-outline-info") }}
-  </div>
-</form>
+  {% endfor %}
+</div>
 {% endblock content %}

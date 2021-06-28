@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="static/dt/datatables.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
 
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
@@ -69,11 +70,13 @@
               data-bs-placement=" " title="Logout">
               <i>{{ session.get('user').name }}</i>
             </a> &#9996;
+            <a href="/flaskcode"><span class="badge badge-pill badge-dark">Edit Json</span></a>
           </div>
         </div>
         {% endif %}
         {% block content %}{% endblock %}
       </div>
+
       <!-- <div class="col-md-4">
         <div class="content-section">
           <h3>Our Sidebar</h3>
@@ -105,13 +108,12 @@
     crossorigin="anonymous"></script>
   <script type="text/javascript" src="static/dt/datatables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 
 
   <script>
     $(document).ready(function () {
-      $('#datatable1').DataTable({
-        "paging": false
-      });
+      $('table.display').DataTable();
     });
   </script>
 
@@ -177,13 +179,19 @@
   </script>
 
 
-  <script>
+  <script type="text/javascript">
     function shiftBuild(event) {
-      if (event.shiftKey) {
-        console.log("shift click function")
+      if (event.keyCode == 13) {
+        let confirmAction = confirm("Are you sure to execute this action?");
+        if (confirmAction) {
+          console.log("setttt");
+        }
+        else {
+          console.log("vendangi vendaa");
+        }
       }
       else {
-        console.log("!shift click function")
+        console.log("someting")
       }
     }
   </script>

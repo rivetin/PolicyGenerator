@@ -2,15 +2,15 @@ import os
 import json
 import json2zip
 import sqlite3
-import uuid
 import requests
 import msal
 import shutil
+import flaskcode
+from functions import lloogg, date_string, file_dict, template_dict
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.middleware.proxy_fix import ProxyFix
 from pprint import pprint
 from dotenv import load_dotenv
-from datetime import datetime
 from flask_session import Session
 from flask import Flask, render_template, sessions, url_for, flash, redirect, request, session, send_from_directory, g
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
@@ -27,40 +27,6 @@ dirname = os.path.dirname(__file__)
 # returns date as string
 
 
-def lloogg(s, x):
-    if s == "b":
-        print('--------------------------------------------')
-        print(f'{x}')
-        print('--------------------------------------------')
-    if s == "s":
-        print(f'{x}')
-
-
-def date_string(x):
-    lloogg("s", "Date returned")
-    if x == 'stamp':
-        return datetime. now(). strftime("_%d_%m_%Y_%I:%M:%S_%p")
-    if x == 'homelog':
-        return datetime. now(). strftime("%I:%M, %B %d, %Y")
-
-# returns a dict with all files in the docx dir without extention
-
-
-def file_dict():
-    lloogg("s", "Traversing dir folder : - Retrieved")
-    path = os.path.join(dirname, 'docx')
-    dir_list = os.listdir(path)
-    dict_dir = {}
-    x = 1
-    for item in dir_list:
-        item = item.split(".")[0]
-        dict_dir[f"{x}"] = item
-        x += 1
-    print(dict_dir)
-    lloogg("b", "Traversing dir folder : - Retrieved")
-    return dict_dir
-
-
 dotenv_path = os.path.join(dirname, '.env')
 load_dotenv(dotenv_path)
 
@@ -70,8 +36,12 @@ app.config['SECRET_KEY'] = os.environ.get(
     'SECRET_KEY')  # should use env --> done
 app.config.from_object(app_config)
 Session(app)
-
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+app.config.from_object(flaskcode.default_config)
+app.config['FLASKCODE_RESOURCE_BASEPATH'] = os.path.join(
+    dirname, 'static/json')
+app.register_blueprint(flaskcode.blueprint, url_prefix='/flaskcode')
 
 
 login_manager = LoginManager(app)
@@ -153,17 +123,14 @@ def home():
 @login_required
 def temp_view():
     form = template()
-    dict_temp = file_dict()
     if form.validate_on_submit():
         f = form.template.data
-        f.filename = f.filename.split(
-            '.')[0]+date_string('stamp')+'.'+f.filename.split('.')[1]
+        group_name = request.form.get('group')
+        # f.filename = f.filename.split(
+        #     '.')[0]+date_string('stamp')+'.'+f.filename.split('.')[1]
         filename = secure_filename(f.filename)
-        f.save(os.path.join(
-            dirname, 'docx', filename
-        ))
-    dict_temp_list = list(dict_temp.values())
-    pprint(dict_temp_list)
+        f.save(os.path.join(dirname, 'docx', group_name, filename))
+    dict_temp_list = template_dict()
     lloogg("b", "Someone is temp_view")
     return render_template('temp_view.html', title='temp_view', posts=dict_temp_list, form=form)
 
@@ -245,7 +212,9 @@ def login():
 def build():
 
     lloogg("b", "Someone is trying to build")
-    dict_items = file_dict()
+
+    dict_items = template_dict()
+
     form = BuildForm()
     if form.validate_on_submit():
         f = form.logo.data
@@ -266,7 +235,7 @@ def build():
         doc_ref = form.doc_ref.data
         data_author = form.data_author.data
         data_classification = form.data_classification.data
-        data_date = form.data_date.data
+        data_date = form.data_date.data.strftime('%Y-%m-%d')
         data_owner = form.data_owner.data
 
         if session.get('user'):
@@ -290,8 +259,8 @@ def build():
                 'ithelp_name': ithelp_name,
                 'doc_ref': doc_ref,
                 'data_author': data_author,
-                'data_classification': data_author,
-                'data_date': data_author,
+                'data_classification': data_classification,
+                'data_date': data_date,
                 'data_owner': data_author
             },
             'specific_fields': {
@@ -299,23 +268,34 @@ def build():
             }
         }
 
-        for key, value in dict_items.items():
-            check = request.form.get(value)
-            if check:
-                data_author = (request.form.get('author-of-'+value))
-                data_classification = (
-                    request.form.get('classification-of-'+value))
-                data_date = (request.form.get('Date-of-'+value+'-creation'))
-                data_owner = (request.form.get('Owner-of-'+value))
+        for keys in dict_items:
+            y = {}
+            y[keys] = {}
+            for value in dict_items[keys]:
+                check = request.form.get(value)
+                if check:
+                    x = {}
+                    docname = value+'.docx'
+                    value = value.replace(' ', '')
+                    data_author = request.form.get('author-of-'+value)
+                    data_classification = request.form.get(
+                        'classification-of-'+value)
+                    data_date = request.form.get('Date-of-'+value+'-creation')
+                    data_owner = request.form.get('Owner-of-'+value)
+                    print('author-of-'+value)
+                    print('classification-of-'+value)
+                    print('Date-of-'+value+'-creation')
 
-                x = {
-                    'data_author': data_author,
-                    'data_classification': data_classification,
-                    'data_date': data_date,
-                    'data_owner': data_owner
-                }
+                    x[docname] = {
+                        'data_author': data_author,
+                        'data_classification': data_classification,
+                        'data_date': data_date,
+                        'data_owner': data_owner
+                    }
 
-                json_dict['specific_fields'][value+'.docx'] = x
+                    y[keys].update(x)
+
+            json_dict['specific_fields'].update(y)
 
         out_file_name = project_name+date_string('stamp')+".json"
         out_file_name = secure_filename(out_file_name)
@@ -369,8 +349,9 @@ def delete():
 @ app.route('/temp2del/<path:filename>', methods=['GET', 'POST'])
 @ login_required
 def temp2del(filename):
+    group_name = request.args.get('key')
     lloogg("b", "Delete temp initiated")
-    temp_path = os.path.join(dirname, 'docx', filename+'.docx')
+    temp_path = os.path.join(dirname, 'docx', group_name, filename+'.docx')
     os.remove(temp_path)
     flash(f'File removed 😦', 'danger')
 
@@ -406,7 +387,7 @@ def deleteAll(type):
         for file in os.scandir(file_path):
             if file.name.endswith(".json"):
                 os.unlink(file.path)
-
+        flash(f'All Json Config files where deleted 🙃', 'danger')
         lloogg("b", "All Json Configs deleted")
         return redirect(url_for('delete'))
 

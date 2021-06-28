@@ -189,77 +189,104 @@
             </div>
             <button type="button" onclick="selects()" class="btn btn-outline-info">Check All ⬇ </button>
             <button type="button" onclick="deSelect()" class="btn btn-outline-info">unCheck All ⬆ </button>
-            <table id="datatable1" class="display" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Templates</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for key, value in dict_item.items() %}
-                    {% set oldvalue = value %}
-                    {% set value = value.split(' ') %}
-                    {% set value = value|join('') %}
+            <!-- Pills navs -->
+            <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                {% for keys in dict_item %}
 
-                    <tr>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" id="{{ value }}" name="{{ oldvalue }}" type="checkbox"
-                                    value=1>
-                                <label class="form-check-label" for="{{ value }}">{{ oldvalue }}</label>
-                            </div>
-                            {% set split_list = value.split(' ') %}
-                            <div id="div{{ value }}" class=" selectt {{ value }}">
-                                <div class=" form-group">
-                                    <label class="form-control-label" for="author-of-{{ value }}">author-of-{{ value
-                                        }}</label>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="ex3-tab-{{ loop.index }}" data-mdb-toggle="pill" href="#{{ keys }}"
+                        role="tab" aria-controls="ex3-pills-1" aria-selected="true">{{ keys }}</a>
+                </li>
 
+                {% endfor %}
+            </ul>
+            <!-- Pills navs -->
 
-                                    <input class="form-control form-control-lg" id="author-of-{{ value }}"
-                                        name="author-of-{{ value }}" type="text" value="">
+            <!-- Pills content -->
+            <div class="tab-content" id="ex2-content">
+                {% for keys in dict_item %}
+                <div class="tab-pane fade" id="{{ keys }}" role="tabpanel" aria-labelledby="ex3-tab-{{ loop.index }}">
+                    <table id="" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Templates</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for value in dict_item[keys] %}
+                            {% set oldvalue = value %}
+                            {% set value = value.split(' ') %}
+                            {% set value = value|join('') %}
 
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-control-label"
-                                        for="classification-of-{{ value }}">classification-of-{{
-                                        value
-                                        }}</label>
-
-
-                                    <input class="form-control form-control-lg" id="classification-of-{{ value }}"
-                                        name="classification-of-{{ value }}" type="text" value="">
-
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-control-label" for="Date-of-{{ value }}-creation">Date-of-{{
-                                        value
-                                        }}-creation</label>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" id="{{ value }}" name="{{ oldvalue }}"
+                                            type="checkbox" value=1>
+                                        <label class="form-check-label" for="{{ value }}">{{ oldvalue }}</label>
+                                    </div>
+                                    {% set split_list = value.split(' ') %}
+                                    <div id="div{{ value }}" class=" selectt {{ value }}">
+                                        <div class=" form-group">
+                                            <label class="form-control-label" for="author-of-{{ value }}">author-of-{{
+                                                value
+                                                }}</label>
 
 
-                                    <input class="form-control form-control-lg" id="Date-of-{{ value }}-creation"
-                                        name="Date-of-{{ value }}-creation" type="text" value="">
+                                            <input class="form-control form-control-lg" id="author-of-{{ value }}"
+                                                name="author-of-{{ value }}" type="text" value="">
 
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-control-label" for="Owner-of-{{ value }}">Owner-of-{{ value
-                                        }}</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label"
+                                                for="classification-of-{{ value }}">classification-of-{{
+                                                value
+                                                }}</label>
 
 
-                                    <input class="form-control form-control-lg" id="Owner-of-{{ value }}"
-                                        name="Owner-of-{{ value }}" type="text" value="">
+                                            <input class="form-control form-control-lg"
+                                                id="classification-of-{{ value }}" name="classification-of-{{ value }}"
+                                                type="text" value="">
 
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    {%endfor%}
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Templates</th>
-                    </tr>
-                </tfoot>
-            </table>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label"
+                                                for="Date-of-{{ value }}-creation">Date-of-{{
+                                                value
+                                                }}-creation</label>
+
+
+                                            <input class="form-control form-control-lg"
+                                                id="Date-of-{{ value }}-creation" name="Date-of-{{ value }}-creation"
+                                                type="date" value="">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="Owner-of-{{ value }}">Owner-of-{{
+                                                value
+                                                }}</label>
+
+
+                                            <input class="form-control form-control-lg" id="Owner-of-{{ value }}"
+                                                name="Owner-of-{{ value }}" type="text" value="">
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Templates</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Pills content -->
+
         </fieldset>
         <div onclick="shiftBuild (event);" class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}
