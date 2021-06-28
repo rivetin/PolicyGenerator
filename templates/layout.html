@@ -115,6 +115,18 @@
     $(document).ready(function () {
       $('table.display').DataTable();
     });
+
+
+    function checkCheckboxes(id) {
+
+      $(".active").find(':checkbox').each(function () {
+
+        jQuery(this).trigger('click');
+
+      });
+
+    }
+
   </script>
 
 
