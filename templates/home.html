@@ -8,7 +8,7 @@
       <small class="text-muted">{{ post.date_posted }}</small>
     </div>
     {% set url = url_for('download', filename=post.json) %}
-    <h2 data-bs-toggle="tooltip" onclick="shiftBuild(event);" data-bs-placement="top"
+    <h2 data-bs-toggle="tooltip" onclick="modal();" data-bs-placement="top"
       title="Download {{ post.title }} as Zip file"><a class="article-title" href="{{ url }}">{{
         post.title }}</a></h2>
     <p class="article-content">{{ post.content }}</p>

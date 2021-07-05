@@ -10,6 +10,12 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="static/dt/datatables.min.css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
 
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
@@ -22,13 +28,30 @@
 </head>
 
 <body>
+
+
+  <div class="preloader">
+    <img src="static/spinner.svg" alt="spinner">
+  </div>
+
+
+
+  <div class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content" style="width: 48px">
+        <span class="fa fa-spinner fa-spin fa-3x"></span>
+      </div>
+    </div>
+  </div>
+
+
   <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
       <div class="container">
         <a class="navbar-brand mr-4" href="/">Policy Generator</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
           aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <span class="dark-teal-text"><i class="fas fa-bars fa-1x"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav mr-auto">
@@ -109,6 +132,42 @@
   <script type="text/javascript" src="static/dt/datatables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+
+
+
+  <script>
+    function modal() {
+      $('.modal').modal('show');
+      setTimeout(function () {
+        console.log('hejsan');
+        $('.modal').modal('hide');
+      }, 5000);
+    }
+  </script>
+
+
+  <script type="text/javascript">
+    const preloader = document.querySelector('.preloader');
+    const fadeEffect = setInterval(() => {
+      // if we don't set opacity 1 in CSS, then
+      // it will be equaled to "" -- that's why
+      // we check it, and if so, set opacity to 1
+      if (!preloader.style.opacity) {
+        preloader.style.opacity = 1;
+      }
+      if (preloader.style.opacity > 0) {
+        preloader.style.opacity -= 0.1;
+      } else {
+        clearInterval(fadeEffect);
+      }
+    }, 1);
+
+    window.addEventListener('load', fadeEffect);
+  </script>
+
 
 
   <script>

@@ -261,7 +261,7 @@ def build():
                 'data_author': data_author,
                 'data_classification': data_classification,
                 'data_date': data_date,
-                'data_owner': data_author
+                'data_owner': data_owner
             },
             'specific_fields': {
 

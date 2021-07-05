@@ -187,10 +187,18 @@
                 {{ form.data_owner(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
-            <button type="button" onclick="selects()" class="btn btn-outline-info">Check All ⬇ </button>
-            <button type="button" onclick="deSelect()" class="btn btn-outline-info">unCheck All ⬆ </button>
-            <button type="button" onclick="checkCheckboxes(this.id);" class="btn btn-outline-info">Group Check | UnCheck
-            </button>
+
+            <div class="btn-group d-flex justify-content-around mb-2">
+                <button type="button" onclick="selects()" class="btn btn-outline-info ">Check All ⬇
+                </button>
+                <button type="button" onclick="deSelect()" class="btn btn-outline-info ">unCheck All ⬆
+                </button>
+                <button type="button" onclick="checkCheckboxes(this.id);" class="btn btn-outline-info ">Group
+                    Check ⬇
+                </button>
+            </div>
+
+
 
 
             <!-- Pills navs -->
@@ -198,8 +206,8 @@
                 {% for keys in dict_item %}
 
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="ex3-tab-{{ loop.index }}" data-mdb-toggle="pill" href="#{{ keys }}"
-                        role="tab" aria-controls="ex3-pills-1" aria-selected="true">{{ keys }}</a>
+                    <a class="nav-link btn-outline-info" id="ex3-tab-{{ loop.index }}" data-mdb-toggle="pill"
+                        href="#{{ keys }}" role="tab" aria-controls="ex3-pills-1" aria-selected="true">{{ keys }}</a>
                 </li>
 
                 {% endfor %}
@@ -210,7 +218,7 @@
             <div class="tab-content" id="ex2-content">
                 {% for keys in dict_item %}
                 <div class="tab-pane fade" id="{{ keys }}" role="tabpanel" aria-labelledby="ex3-tab-{{ loop.index }}">
-                    <table id="" class="display" style="width:100%">
+                    <table id="" class="display table table-hover " style="width:100%">
                         <thead>
                             <tr>
                                 <th>Templates</th>
